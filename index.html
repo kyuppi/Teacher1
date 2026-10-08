@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#111827">
+  <title>授業時数管理</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">CLASS HOURS MANAGER</p>
+        <h1>授業時数管理</h1>
+        <p class="subtitle">クラスごとの授業時数を、シンプルに記録・集計</p>
+        <div class="teacher-badge" id="teacherBadge">先生名未設定</div>
+      </div>
+      <button class="icon-button" id="settingsBtn" type="button" aria-label="設定を開く">⚙</button>
+    </header>
+
+    <main>
+      <section class="hero-card">
+        <div class="hero-icon">◷</div>
+        <div>
+          <p class="hero-label">TODAY</p>
+          <p class="hero-date" id="todayLabel">----</p>
+        </div>
+        <div class="hero-total">
+          <span>今日の授業時数</span>
+          <strong id="todayTotal">0</strong>
+          <small>時間</small>
+        </div>
+      </section>
+
+      <section class="panel input-panel">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">RECORD</p>
+            <h2>授業時数を入力</h2>
+          </div>
+          <span class="step-badge">1</span>
+        </div>
+
+        <form id="recordForm" novalidate>
+          <div class="form-grid">
+            <label class="field">
+              <span>クラス</span>
+              <select id="classSelect" required></select>
+            </label>
+            <label class="field">
+              <span>日付</span>
+              <input id="dateInput" type="date" required>
+            </label>
+          </div>
+
+          <label class="field hours-field">
+            <span>授業時数</span>
+            <div class="hours-input-wrap">
+              <input id="hoursInput" type="number" min="0.5" max="24" step="0.5" inputmode="decimal" placeholder="例：1" required>
+              <span>時間</span>
+            </div>
+          </label>
+
+          <button class="primary-button" type="submit">
+            <span>＋</span> この授業時数を記録する
+          </button>
+        </form>
+      </section>
+
+      <section class="panel summary-panel">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">SUMMARY</p>
+            <h2>クラス別集計</h2>
+          </div>
+          <span class="count-badge" id="classCount">0クラス</span>
+        </div>
+        <div id="summaryList" class="summary-list"></div>
+      </section>
+
+      <section class="panel history-panel">
+        <div class="section-heading history-heading">
+          <div>
+            <p class="section-kicker">HISTORY</p>
+            <h2>記録履歴</h2>
+          </div>
+          <button class="text-button" id="clearHistoryBtn" type="button">履歴を削除</button>
+        </div>
+        <div id="historyList" class="history-list"></div>
+      </section>
+    </main>
+
+    <footer>データはこの端末のブラウザ内に保存されます</footer>
+  </div>
+
+  <div class="modal-backdrop" id="settingsModal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+      <div class="modal-header">
+        <div>
+          <p class="section-kicker">SETTINGS</p>
+          <h2 id="settingsTitle">設定</h2>
+        </div>
+        <button class="close-button" id="closeSettingsBtn" type="button" aria-label="閉じる">×</button>
+      </div>
+
+      <div class="teacher-settings">
+        <label class="field">
+          <span>先生の名前</span>
+          <input id="teacherNameInput" type="text" maxlength="40" placeholder="例：山田先生" autocomplete="name">
+        </label>
+        <button class="secondary-button" id="saveTeacherBtn" type="button">先生の名前を保存</button>
+      </div>
+
+      <div class="class-list-title">クラスを追加</div>
+      <form id="classForm" class="class-add-form" novalidate>
+        <label class="field">
+          <span>追加するクラス</span>
+          <input id="classNameInput" type="text" maxlength="30" placeholder="例：1-1" autocomplete="off" required>
+        </label>
+        <button class="secondary-button" type="submit">＋ クラスを追加</button>
+      </form>
+
+      <div class="class-list-title">登録済みクラス</div>
+      <div id="classSettingsList" class="class-settings-list"></div>
+      <p class="modal-note">※ クラスを削除しても、過去の記録は残ります。</p>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
